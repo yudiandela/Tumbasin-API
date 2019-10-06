@@ -14,3 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+// CRUD Category
+Route::resource('category', 'CategoryController');
