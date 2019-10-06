@@ -7,11 +7,12 @@ use Faker\Generator as Faker;
 
 $factory->define(Category::class, function (Faker $faker) {
 
-    $name = $faker->unique()->word();
+    $name = $faker->unique()->sentence(2, true);
 
     return [
-        'name'  => $name,
-        'slug'  => Str::slug($name),
-        'image' => 'https: //placeimg.com/120/120/tech'
+        'name'        => strtoupper($name),
+        'slug'        => Str::slug($name),
+        'image'       => 'https://placeimg.com/120/120/tech',
+        'description' => $faker->paragraphs(2, true),
     ];
 });

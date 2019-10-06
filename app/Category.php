@@ -24,6 +24,12 @@ class Category extends Model
      */
     public function getImageUrlAttribute()
     {
+        $image = $this->image;
+
+        if (filter_var($image, FILTER_VALIDATE_URL)) {
+            return $image;
+        }
+
         return Storage::url($this->image);
     }
 }
