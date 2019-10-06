@@ -12,7 +12,7 @@
                     <div class="col mb-3">
                         <label for="">Nama Kategori</label>
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                            placeholder="Nama kategori" value="{{ old('name') }}" />
+                            value="{{ old('name') }}" />
                         @error('name')
                         <div class="invalid-tooltip">
                             {{ $message }}
@@ -21,14 +21,24 @@
                     </div>
 
                     <div class="col mb-3">
-                        <label for="">File Image</label>
+                        <label for="">Deskripsi Kategori</label>
+                        <textarea name="description"
+                            class="form-control @error('description') is-invalid @enderror">{{ old('description') }}</textarea>
+                        @error('description')
+                        <div class="invalid-tooltip">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+
+                    <div class="col mb-3">
+                        <label for="fileImage">File Image</label>
                         <input type="file" name="image" id="fileImage">
                         @error('image')
                         <div class="invalid-tooltip">
                             {{ $message }}
                         </div>
                         @enderror
-
                     </div>
 
                     <div class="col">

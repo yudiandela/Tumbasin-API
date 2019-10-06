@@ -38,25 +38,18 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'  => ['required', 'string', 'max:255'],
-            'image' => ['required', 'image', 'mimes:jpg,jpeg,png,gif,bmp']
+            'name'        => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'image'       => ['required', 'image', 'mimes:jpg,jpeg,png,gif,bmp']
         ]);
 
-        $image_url = '';
-
-        if ($request->hasFile('image')) {
-            $image            = $request->file('image');
-            $originalFileName = $image->getClientOriginalName();
-            $extension        = $image->getClientOriginalExtension();
-            $fileNameOnly     = pathinfo($originalFileName, PATHINFO_FILENAME);
-            $fileName         = Str::slug('tumbasin-image-' . $fileNameOnly . '-' . time()) . '.' . $extension;
-            $image_url        = $image->storeAs('public', $fileName);
-        }
+        $image_url = $this->uploadFile($request);
 
         Category::create([
-            'name'  => $request->name,
-            'slug'  => Str::slug($request->name),
-            'image' => $image_url
+            'name'        => $request->name,
+            'slug'        => Str::slug($request->name),
+            'image'       => $image_url,
+            'description' => $request->description
         ]);
 
         return redirect()->route('category.index');
@@ -94,20 +87,12 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate([
-            'name'  => ['required', 'string', 'max:255'],
-            'image' => ['image', 'mimes:jpg,jpeg,png,gif,bmp']
+            'name'        => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'image'       => ['image', 'mimes:jpg,jpeg,png,gif,bmp']
         ]);
 
-        $image_url = null;
-
-        if ($request->hasFile('image')) {
-            $image            = $request->file('image');
-            $originalFileName = $image->getClientOriginalName();
-            $extension        = $image->getClientOriginalExtension();
-            $fileNameOnly     = pathinfo($originalFileName, PATHINFO_FILENAME);
-            $fileName         = Str::slug('tumbasin-image-' . $fileNameOnly . '-' . time()) . '.' . $extension;
-            $image_url        = $image->storeAs('public', $fileName);
-        }
+        $image_url = $this->uploadFile($request);
 
         $category->name  = $request->name;
         $category->slug  = Str::slug($request->name);
@@ -127,5 +112,26 @@ class CategoryController extends Controller
     {
         $category->delete();
         return redirect()->route('category.index');
+    }
+
+    /**
+     * Mendapatkan data file uploads
+     *
+     * @return  String
+     */
+    protected function uploadFile($request)
+    {
+        $image_url = null;
+
+        if ($request->hasFile('image')) {
+            $image            = $request->file('image');
+            $originalFileName = $image->getClientOriginalName();
+            $extension        = $image->getClientOriginalExtension();
+            $fileNameOnly     = pathinfo($originalFileName, PATHINFO_FILENAME);
+            $fileName         = Str::slug('tumbasin-image-' . $fileNameOnly . '-' . time()) . '.' . $extension;
+            $image_url        = $image->storeAs('public', $fileName);
+        }
+
+        return $image_url;
     }
 }

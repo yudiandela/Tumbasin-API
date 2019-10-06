@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('content')
-<h2>Tambah Kategori</h2>
+<h2>Edit Kategori</h2>
 <div class="row">
     <div class="col-md-4">
         <div class="card">
@@ -16,6 +16,17 @@
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
                             placeholder="Nama kategori" value="{{ old('name') ?: $category->name }}" />
                         @error('name')
+                        <div class="invalid-tooltip">
+                            {{ $message }}
+                        </div>
+                        @enderror
+                    </div>
+
+                    <div class="col mb-3">
+                        <label for="">Deskripsi Kategori</label>
+                        <textarea name="description"
+                            class="form-control">{{ old('description') ?: $category->description }}</textarea>
+                        @error('description')
                         <div class="invalid-tooltip">
                             {{ $message }}
                         </div>
