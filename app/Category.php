@@ -30,6 +30,6 @@ class Category extends Model
             return $image;
         }
 
-        return Storage::url($this->image);
+        return Storage::url($image);
     }
 }
