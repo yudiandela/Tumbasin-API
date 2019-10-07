@@ -17,3 +17,6 @@ Route::get('/', function () {
 
 // CRUD Category
 Route::resource('category', 'CategoryController');
+
+// CRUD product
+Route::resource('product', 'ProductController');
