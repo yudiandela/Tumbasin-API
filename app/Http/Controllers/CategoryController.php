@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use Illuminate\Http\Request;
+use App\Helpers\FileUpload;
 use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class CategoryController extends Controller
 {
@@ -43,12 +44,10 @@ class CategoryController extends Controller
             'image'       => ['required', 'image', 'mimes:jpg,jpeg,png,gif,bmp']
         ]);
 
-        $image_url = $this->uploadFile($request);
-
         Category::create([
             'name'        => $request->name,
             'slug'        => Str::slug($request->name),
-            'image'       => $image_url,
+            'image'       => FileUpload::uploadFile($request),
             'description' => $request->description
         ]);
 
@@ -92,11 +91,10 @@ class CategoryController extends Controller
             'image'       => ['image', 'mimes:jpg,jpeg,png,gif,bmp']
         ]);
 
-        $image_url = $this->uploadFile($request);
-
-        $category->name  = $request->name;
-        $category->slug  = Str::slug($request->name);
-        $category->image = $image_url ?: $category->image;
+        $category->name        = $request->name;
+        $category->slug        = Str::slug($request->name);
+        $category->description = $request->description;
+        $category->image       = FileUpload::uploadFile($request) ?: $category->image;
         $category->save();
 
         return redirect()->route('category.index');
@@ -112,26 +110,5 @@ class CategoryController extends Controller
     {
         $category->delete();
         return redirect()->route('category.index');
-    }
-
-    /**
-     * Mendapatkan data file uploads
-     *
-     * @return  String
-     */
-    protected function uploadFile($request)
-    {
-        $image_url = null;
-
-        if ($request->hasFile('image')) {
-            $image            = $request->file('image');
-            $originalFileName = $image->getClientOriginalName();
-            $extension        = $image->getClientOriginalExtension();
-            $fileNameOnly     = pathinfo($originalFileName, PATHINFO_FILENAME);
-            $fileName         = Str::slug('tumbasin-image-' . $fileNameOnly . '-' . time()) . '.' . $extension;
-            $image_url        = $image->storeAs('public', $fileName);
-        }
-
-        return $image_url;
     }
 }

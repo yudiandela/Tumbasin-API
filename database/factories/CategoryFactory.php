@@ -7,7 +7,15 @@ use Faker\Generator as Faker;
 
 $factory->define(Category::class, function (Faker $faker) {
 
-    $name = $faker->unique()->sentence(2, true);
+    $name = $faker->unique()->randomElement([
+        'JAJANAN',
+        'BUMBU',
+        'SAYURAN',
+        'LAUK PAUK',
+        'SEAFOOD',
+        'SEMBAKO',
+        'BUAH'
+    ]);
 
     return [
         'name'        => strtoupper($name),
