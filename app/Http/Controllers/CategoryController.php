@@ -95,7 +95,7 @@ class CategoryController extends Controller
 
         $category->name  = $request->name;
         $category->slug  = Str::slug($request->name);
-        $category->image = url(Storage::url(FileUpload::uploadFile($request))) ?: $category->image;
+        $category->image = $request->hasFile('image') ? url(Storage::url(FileUpload::uploadFile($request))) : $category->image;
         $category->save();
 
         // Tampilkan data berupa JSON

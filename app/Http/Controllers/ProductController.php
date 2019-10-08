@@ -129,7 +129,7 @@ class ProductController extends Controller
         $product->slug              = Str::slug($request->name);
         $product->short_description = Str::limit($request->description);
         $product->description       = $request->description;
-        $product->image             = url(Storage::url(FileUpload::uploadFile($request))) ?: $product->image;
+        $product->image             = $request->hasFile('image') ? url(Storage::url(FileUpload::uploadFile($request))) : $product->image;
         $product->price             = $request->price;
         $product->unit              = $request->unit;
         $product->stock             = $request->stock;

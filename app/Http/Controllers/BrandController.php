@@ -95,7 +95,7 @@ class BrandController extends Controller
 
         $brand->name  = $request->name;
         $brand->slug  = Str::slug($request->name);
-        $brand->image = url(Storage::url(FileUpload::uploadFile($request))) ?: $brand->image;
+        $brand->image = $request->hasFile('image') ? url(Storage::url(FileUpload::uploadFile($request))) : $brand->image;
         $brand->save();
 
         // Tampilkan data berupa JSON
