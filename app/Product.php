@@ -36,6 +36,16 @@ class Product extends Model
     }
 
     /**
+     * Menyambungkan relasi ke tabel brands
+     *
+     * @return  Brand
+     */
+    public function brand()
+    {
+        return $this->belongsTo(Brand::class);
+    }
+
+    /**
      * Mengambil data gambar
      *
      * @return  String
