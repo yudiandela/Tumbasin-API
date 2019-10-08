@@ -8,21 +8,12 @@ use Illuminate\Support\Facades\Storage;
 class Product extends Model
 {
     /**
-     * Data yang di perbolehkan masuk ke dalam database
+     * Data yang tidak di perbolehkan masuk ke dalam database
      * melalui form inputan dengan eloquent
      *
      * @var array
      */
-    protected $fillable = [
-        'category_id',
-        'title',
-        'slug',
-        'description',
-        'image',
-        'price',
-        'unit',
-        'stock'
-    ];
+    protected $guarded = [];
 
     /**
      * Data yang tidak di tampilkan didalam data json
@@ -51,7 +42,7 @@ class Product extends Model
      */
     public function getImageUrlAttribute()
     {
-        $image = $this->image;
+        $image = $this->images;
 
         if (filter_var($image, FILTER_VALIDATE_URL)) {
             return $image;

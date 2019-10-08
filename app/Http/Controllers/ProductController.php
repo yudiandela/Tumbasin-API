@@ -44,23 +44,32 @@ class ProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title'       => ['required', 'string', 'max:255'],
+            'name'        => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'image'       => ['required', 'image', 'mimes:jpg,jpeg,png,gif,bmp'],
+            'image'       => ['required', 'image', 'mimes:jpg,jpeg,png,gif,bmp,svg'],
             'price'       => ['required', 'numeric'],
             'unit'        => ['required', 'string'],
             'stock'       => ['required', 'numeric'],
+            'weight'      => ['required', 'string'],
+            'length'      => ['required', 'string'],
+            'width'       => ['required', 'string'],
+            'height'      => ['required', 'string']
         ]);
 
         $product = Product::create([
-            'category_id' => $request->category_id,
-            'title'       => $request->title,
-            'slug'        => Str::slug($request->title),
-            'description' => $request->description,
-            'image'       => url(Storage::url(FileUpload::uploadFile($request))),
-            'price'       => $request->price,
-            'unit'        => $request->unit,
-            'stock'       => $request->stock
+            'category_id'       => $request->category_id,
+            'name'              => $request->name,
+            'slug'              => Str::slug($request->name),
+            'short_description' => Str::limit($request->description),
+            'description'       => $request->description,
+            'image'             => url(Storage::url(FileUpload::uploadFile($request))),
+            'price'             => $request->price,
+            'unit'              => $request->unit,
+            'stock'             => $request->stock,
+            'weight'            => $request->weight,
+            'length'            => $request->length,
+            'width'             => $request->width,
+            'height'            => $request->height
         ]);
 
         // return data berupa object
@@ -87,9 +96,10 @@ class ProductController extends Controller
      * @param  \App\Product  $product
      * @return \Illuminate\Http\Response
      */
-    public function edit(Product $product)
+    public function edit(Product $product, Category $category)
     {
-        //
+        $categories = $category->orderBy('name', 'ASC')->get();
+        return view('product.edit', compact('product', 'categories'));
     }
 
     /**
@@ -101,7 +111,38 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        //
+        $request->validate([
+            'name'        => ['required', 'string', 'max:255'],
+            'description' => ['required', 'string'],
+            'image'       => ['image', 'mimes:jpg,jpeg,png,gif,bmp,svg'],
+            'price'       => ['required', 'numeric'],
+            'unit'        => ['required', 'string'],
+            'stock'       => ['required', 'numeric'],
+            'weight'      => ['required', 'string'],
+            'length'      => ['required', 'string'],
+            'width'       => ['required', 'string'],
+            'height'      => ['required', 'string']
+        ]);
+
+        $product->category_id       = $request->category_id;
+        $product->name              = $request->name;
+        $product->slug              = Str::slug($request->name);
+        $product->short_description = Str::limit($request->description);
+        $product->description       = $request->description;
+        $product->image             = url(Storage::url(FileUpload::uploadFile($request))) ?: $product->image;
+        $product->price             = $request->price;
+        $product->unit              = $request->unit;
+        $product->stock             = $request->stock;
+        $product->weight            = $request->weight;
+        $product->length            = $request->length;
+        $product->width             = $request->width;
+        $product->height            = $request->height;
+        $product->save();
+
+        // return data berupa object
+        return response()->json([
+            $product
+        ], 201);
     }
 
     /**

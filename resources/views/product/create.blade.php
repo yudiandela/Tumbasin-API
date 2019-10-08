@@ -6,7 +6,7 @@
     <div class="card mb-5">
 
         <div class="card-header">
-            <h2>Tambah Product</h2>
+            <h2>Tambah data Product</h2>
         </div>
 
         <div class="card-body">
@@ -14,9 +14,9 @@
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="title">Product Title</label>
-                        <input type="text" name="title" class="form-control @error('title') is-invalid @enderror"
-                            id="title" value="{{ old('title') }}">
+                        <label for="name">Product Name</label>
+                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                            id="name" value="{{ old('name') }}">
                         @error('title')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -39,7 +39,9 @@
                                 <label for="category">Kategori</label>
                                 <select name="category_id" class="custom-select">
                                     @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                    <option value="{{ $category->id }}">
+                                        {{ $category->name }}
+                                    </option>
                                     @endforeach
                                 </select>
                             </div>
@@ -87,6 +89,53 @@
                                     class="form-control @error('stock') is-invalid @enderror" id="stock"
                                     value="{{ old('stock') }}">
                                 @error('stock')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="weight">Berat</label>
+                                <input type="text" name="weight"
+                                    class="form-control @error('weight') is-invalid @enderror" id="weight"
+                                    value="{{ old('weight') }}">
+                                @error('weight')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="length">Panjang</label>
+                                <input type="text" name="length"
+                                    class="form-control @error('length') is-invalid @enderror" id="length"
+                                    value="{{ old('length') }}">
+                                @error('length')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="width">Lebar</label>
+                                <input type="text" name="width"
+                                    class="form-control @error('width') is-invalid @enderror" id="width"
+                                    value="{{ old('width') }}">
+                                @error('width')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label for="height">Tinggi</label>
+                                <input type="text" name="height"
+                                    class="form-control @error('height') is-invalid @enderror" id="height"
+                                    value="{{ old('height') }}">
+                                @error('height')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
