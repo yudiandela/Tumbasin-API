@@ -21,7 +21,7 @@ Url : /category/{category_id}
 Params : 
 'id'    => ['required', 'numeric']
 'name'  => ['required', 'string', 'max:255']
-'image' => ['required', 'string']
+'image' => ['optional', 'string']
 ```
 #### Menghapus data category
 ```
@@ -52,7 +52,7 @@ Url : /brand/{brand_id}
 Params : 
 'id'    => ['required', 'numeric']
 'name'  => ['required', 'string', 'max:255']
-'image' => ['required', 'string']
+'image' => ['optional', 'string']
 ```
 #### Menghapus data brand
 ```
@@ -92,7 +92,7 @@ Params :
 'id'          => ['required', 'numeric']
 'name'        => ['required', 'string', 'max:255']
 'description' => ['required', 'string']
-'image'       => ['required', 'string']
+'image'       => ['optional', 'string']
 'price'       => ['required', 'numeric']
 'unit'        => ['required', 'string']
 'stock'       => ['required', 'numeric']
