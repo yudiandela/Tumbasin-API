@@ -20,6 +20,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'short_description' => Str::limit($description),
         'description'       => $description,
         'image'             => $images,
+        'brand_id'          => $faker->numberBetween(1, 4),
         'price'             => $faker->numberBetween(10000, 100000),
         'unit'              => $units,
         'stock'             => $faker->numberBetween(10000, 100000),
