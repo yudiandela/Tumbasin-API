@@ -6,6 +6,7 @@ use App\Category;
 use App\Helpers\FileUpload;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CategoryController extends Controller
 {
@@ -17,7 +18,9 @@ class CategoryController extends Controller
     public function index()
     {
         $categories = Category::all();
-        return view('category.index', compact('categories'));
+
+        // Tampilkan data berupa JSON
+        return response()->json($categories, 200);
     }
 
     /**
@@ -39,19 +42,18 @@ class CategoryController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
-            'image'       => ['required', 'image', 'mimes:jpg,jpeg,png,gif,bmp']
+            'name'  => ['required', 'string', 'max:255'],
+            'image' => ['required', 'image', 'mimes:jpg,jpeg,png,gif,bmp,svg']
         ]);
 
-        Category::create([
-            'name'        => $request->name,
+        $category = Category::create([
+            'name'        => strtoupper($request->name),
             'slug'        => Str::slug($request->name),
-            'image'       => FileUpload::uploadFile($request),
-            'description' => $request->description
+            'image'       => url(Storage::url(FileUpload::uploadFile($request)))
         ]);
 
-        return redirect()->route('category.index');
+        // Tampilkan data berupa JSON
+        return response()->json($category, 201);
     }
 
     /**
@@ -62,7 +64,8 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view('category.show', compact('category'));
+        // Tampilkan data berupa JSON
+        return response()->json($category, 200);
     }
 
     /**
@@ -87,17 +90,16 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name'        => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
             'image'       => ['image', 'mimes:jpg,jpeg,png,gif,bmp']
         ]);
 
-        $category->name        = $request->name;
-        $category->slug        = Str::slug($request->name);
-        $category->description = $request->description;
-        $category->image       = FileUpload::uploadFile($request) ?: $category->image;
+        $category->name  = $request->name;
+        $category->slug  = Str::slug($request->name);
+        $category->image = url(Storage::url(FileUpload::uploadFile($request))) ?: $category->image;
         $category->save();
 
-        return redirect()->route('category.index');
+        // Tampilkan data berupa JSON
+        return response()->json($category, 201);
     }
 
     /**
@@ -109,6 +111,10 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('category.index');
+
+        // Tampilkan data berupa JSON
+        return response()->json([
+            'message' => 'deleted'
+        ], 200);
     }
 }

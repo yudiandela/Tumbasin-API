@@ -12,21 +12,10 @@
                     @csrf
                     @method('put')
                     <div class="col mb-3">
-                        <label for="">Nama Kategori</label>
-                        <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
+                        <label for="name">Nama Kategori</label>
+                        <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror"
                             placeholder="Nama kategori" value="{{ old('name') ?: $category->name }}" />
                         @error('name')
-                        <div class="invalid-tooltip">
-                            {{ $message }}
-                        </div>
-                        @enderror
-                    </div>
-
-                    <div class="col mb-3">
-                        <label for="">Deskripsi Kategori</label>
-                        <textarea name="description"
-                            class="form-control">{{ old('description') ?: $category->description }}</textarea>
-                        @error('description')
                         <div class="invalid-tooltip">
                             {{ $message }}
                         </div>

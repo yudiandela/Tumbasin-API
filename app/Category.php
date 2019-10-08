@@ -8,13 +8,21 @@ use Illuminate\Support\Facades\Storage;
 class Category extends Model
 {
     /**
-     * Data yang di perbolehkan masuk ke dalam database
+     * Data yang tidak di perbolehkan masuk ke dalam database
      * melalui form inputan dengan eloquent
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'slug', 'image', 'description'
+    protected $guarded = [];
+
+    /**
+     * Data yang tidak di tampilkan didalam data json
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'created_at',
+        'updated_at'
     ];
 
     /**
