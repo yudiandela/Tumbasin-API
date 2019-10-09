@@ -52,6 +52,7 @@ class ProductController extends Controller
             'name'        => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'image'       => ['required', 'image', 'mimes:jpg,jpeg,png,gif,bmp,svg'],
+            'brand_id'    => ['required', 'numeric'],
             'price'       => ['required', 'numeric'],
             'unit'        => ['required', 'string'],
             'stock'       => ['required', 'numeric'],
@@ -68,6 +69,7 @@ class ProductController extends Controller
             'short_description' => Str::limit($request->description),
             'description'       => $request->description,
             'image'             => url(Storage::url(FileUpload::uploadFile($request))),
+            'brand_id'          => $request->brand_id,
             'price'             => $request->price,
             'unit'              => $request->unit,
             'stock'             => $request->stock,
@@ -78,7 +80,7 @@ class ProductController extends Controller
         ]);
 
         // return data berupa object
-        return (ProductResource::collection($product))
+        return (new ProductResource($product))
             ->response()
             ->setStatusCode(201);
     }
@@ -92,7 +94,7 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         // return data berupa object
-        return (ProductResource::collection($product))
+        return (new ProductResource($product))
             ->response()
             ->setStatusCode(200);
     }
@@ -122,6 +124,7 @@ class ProductController extends Controller
             'name'        => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
             'image'       => ['image', 'mimes:jpg,jpeg,png,gif,bmp,svg'],
+            'brand_id'    => ['required', 'numeric'],
             'price'       => ['required', 'numeric'],
             'unit'        => ['required', 'string'],
             'stock'       => ['required', 'numeric'],
@@ -137,6 +140,7 @@ class ProductController extends Controller
         $product->short_description = Str::limit($request->description);
         $product->description       = $request->description;
         $product->image             = $request->hasFile('image') ? url(Storage::url(FileUpload::uploadFile($request))) : $product->image;
+        $product->brand_id          = $request->brand_id;
         $product->price             = $request->price;
         $product->unit              = $request->unit;
         $product->stock             = $request->stock;
@@ -147,7 +151,7 @@ class ProductController extends Controller
         $product->save();
 
         // return data berupa object
-        return (ProductResource::collection($product))
+        return (new ProductResource($product))
             ->response()
             ->setStatusCode(201);
     }
