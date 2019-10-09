@@ -54,7 +54,7 @@ class BrandController extends Controller
         ]);
 
         // Tampilkan data berupa JSON
-        return (BrandResource::collection($brand))->response()->setStatusCode(201);
+        return (new BrandResource($brand))->response()->setStatusCode(201);
     }
 
     /**
@@ -94,13 +94,13 @@ class BrandController extends Controller
             'image'       => ['image', 'mimes:jpg,jpeg,png,gif,bmp']
         ]);
 
-        $brand->name  = $request->name;
+        $brand->name  = strtoupper($request->name);
         $brand->slug  = Str::slug($request->name);
         $brand->image = $request->hasFile('image') ? url(Storage::url(FileUpload::uploadFile($request))) : $brand->image;
         $brand->save();
 
         // Tampilkan data berupa JSON
-        return (BrandResource::collection($brand))->response()->setStatusCode(201);
+        return (new BrandResource($brand))->response()->setStatusCode(201);
     }
 
     /**
