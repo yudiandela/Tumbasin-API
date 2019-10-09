@@ -54,7 +54,7 @@ class CategoryController extends Controller
         ]);
 
         // Tampilkan data berupa JSON
-        return (CategoryResource::collection($category))->response()->setStatusCode(201);
+        return (new CategoryResource($category))->response()->setStatusCode(201);
     }
 
     /**
@@ -94,13 +94,13 @@ class CategoryController extends Controller
             'image'       => ['image', 'mimes:jpg,jpeg,png,gif,bmp']
         ]);
 
-        $category->name  = $request->name;
+        $category->name  = strtoupper($request->name);
         $category->slug  = Str::slug($request->name);
         $category->image = $request->hasFile('image') ? url(Storage::url(FileUpload::uploadFile($request))) : $category->image;
         $category->save();
 
         // Tampilkan data berupa JSON
-        return (CategoryResource::collection($category))->response()->setStatusCode(201);
+        return (new CategoryResource($category))->response()->setStatusCode(201);
     }
 
     /**
