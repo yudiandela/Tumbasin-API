@@ -7,6 +7,7 @@ use App\Helpers\FileUpload;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
 {
@@ -20,7 +21,7 @@ class CategoryController extends Controller
         $categories = Category::all();
 
         // Tampilkan data berupa JSON
-        return response()->json($categories, 200);
+        return (CategoryResource::collection($categories))->response()->setStatusCode(200);
     }
 
     /**
@@ -53,7 +54,7 @@ class CategoryController extends Controller
         ]);
 
         // Tampilkan data berupa JSON
-        return response()->json($category, 201);
+        return (CategoryResource::collection($category))->response()->setStatusCode(201);
     }
 
     /**
@@ -65,7 +66,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         // Tampilkan data berupa JSON
-        return response()->json($category, 200);
+        return (CategoryResource::collection($category))->response()->setStatusCode(200);
     }
 
     /**
@@ -99,7 +100,7 @@ class CategoryController extends Controller
         $category->save();
 
         // Tampilkan data berupa JSON
-        return response()->json($category, 201);
+        return (CategoryResource::collection($category))->response()->setStatusCode(201);
     }
 
     /**

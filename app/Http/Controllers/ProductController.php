@@ -24,7 +24,9 @@ class ProductController extends Controller
         $products = Product::all();
 
         // return data berupa object
-        return response()->json($products, 200);
+        return (ProductResource::collection($products))
+            ->response()
+            ->setStatusCode(200);
     }
 
     /**
@@ -76,9 +78,9 @@ class ProductController extends Controller
         ]);
 
         // return data berupa object
-        return response()->json([
-            $product
-        ], 201);
+        return (ProductResource::collection($product))
+            ->response()
+            ->setStatusCode(201);
     }
 
     /**
@@ -90,7 +92,9 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         // return data berupa object
-        return response()->json($product, 200);
+        return (ProductResource::collection($product))
+            ->response()
+            ->setStatusCode(200);
     }
 
     /**
@@ -143,9 +147,9 @@ class ProductController extends Controller
         $product->save();
 
         // return data berupa object
-        return response()->json([
-            $product
-        ], 201);
+        return (ProductResource::collection($product))
+            ->response()
+            ->setStatusCode(201);
     }
 
     /**
@@ -180,6 +184,8 @@ class ProductController extends Controller
         })->get();
 
         // Menampilkan data Product Collection
-        return ProductResource::collection($products);
+        return (ProductResource::collection($products))
+            ->response()
+            ->setStatusCode(200);
     }
 }

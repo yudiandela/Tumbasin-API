@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Brand;
 use App\Helpers\FileUpload;
+use App\Http\Resources\BrandResource;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -20,7 +21,7 @@ class BrandController extends Controller
         $brands = Brand::all();
 
         // Tampilkan data berupa JSON
-        return response()->json($brands, 200);
+        return (BrandResource::collection($brands))->response()->setStatusCode(200);
     }
 
     /**
@@ -53,7 +54,7 @@ class BrandController extends Controller
         ]);
 
         // Tampilkan data berupa JSON
-        return response()->json($brand, 201);
+        return (BrandResource::collection($brand))->response()->setStatusCode(201);
     }
 
     /**
@@ -65,7 +66,7 @@ class BrandController extends Controller
     public function show(Brand $brand)
     {
         // Tampilkan data berupa JSON
-        return response()->json($brand, 200);
+        return (BrandResource::collection($brand))->response()->setStatusCode(200);
     }
 
     /**
@@ -99,7 +100,7 @@ class BrandController extends Controller
         $brand->save();
 
         // Tampilkan data berupa JSON
-        return response()->json($brand, 201);
+        return (BrandResource::collection($brand))->response()->setStatusCode(201);
     }
 
     /**

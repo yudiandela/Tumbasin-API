@@ -21,7 +21,7 @@ class OrderController extends Controller
         $orders = Order::get();
 
         // Tampilkan data berupa JSON
-        return OrderResource::collection($orders);
+        return (OrderResource::collection($orders))->response()->setStatusCode(200);
     }
 
     /**
@@ -35,7 +35,7 @@ class OrderController extends Controller
         $order = Order::where('status', $id)->get();
 
         // Tampilkan data berupa JSON
-        return OrderResource::collection($order);
+        return (OrderResource::collection($order))->response()->setStatusCode(200);
     }
 
     /**
@@ -49,6 +49,6 @@ class OrderController extends Controller
     {
         $order = Order::where('product_id', $id)->get();
         // Tampilkan data berupa JSON
-        return OrderResource::collection($order);
+        return (OrderResource::collection($order))->response()->setStatusCode(200);
     }
 }
