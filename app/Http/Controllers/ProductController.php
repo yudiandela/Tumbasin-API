@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Order;
 use App\Product;
 use App\Category;
 use App\Helpers\FileUpload;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Http\Resources\ProductResource;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
@@ -158,5 +161,25 @@ class ProductController extends Controller
         return response()->json([
             'message' => 'deleted'
         ], 200);
+    }
+
+    /**
+     * Mengambil data produk terlaris
+     *
+     * @return  JSON
+     */
+    public function getBestSelling()
+    {
+        $orders = Order::select('product_id', DB::raw('count(product_id) as count'))
+            ->where('status', '>', 1)
+            ->orderBy('count', 'DESC')
+            ->groupBy('product_id');
+
+        $products = Product::joinSub($orders, 'orders', function ($join) {
+            $join->on('products.id', '=', 'orders.product_id');
+        })->get();
+
+        // Menampilkan data Product Collection
+        return ProductResource::collection($products);
     }
 }

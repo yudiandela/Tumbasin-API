@@ -22,4 +22,10 @@ Route::resource('category', 'CategoryController');
 Route::resource('brand', 'BrandController');
 
 // CRUD product
+Route::get('product/best-selling', 'ProductController@getBestSelling')->name('product.bestSelling');
 Route::resource('product', 'ProductController');
+
+// Order Route
+Route::get('order', 'OrderController@index')->name('order.index');
+Route::get('order/status/{status}', 'OrderController@getStatus')->name('order.getStatus');
+Route::get('order/product/{order}', 'OrderController@showByProduct')->name('order.showByProduct');

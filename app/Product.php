@@ -46,6 +46,14 @@ class Product extends Model
     }
 
     /**
+     * Dapatkan pesanan berdasarkan product.
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
+
+    /**
      * Mengambil data gambar
      *
      * @return  String
