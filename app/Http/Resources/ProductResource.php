@@ -18,10 +18,10 @@ class ProductResource extends JsonResource
     {
         return [
             'id'                => $this->id,
-            'category'          => new CategoryResource(Category::find($this->category->id)),
-            'brand'             => new BrandResource(Brand::find($this->brand->id)),
             'name'              => $this->name,
             'slug'              => $this->slug,
+            'category'          => new CategoryResource(Category::find($this->category->id)),
+            'brand'             => new BrandResource(Brand::find($this->brand->id)),
             'short_description' => $this->short_description,
             'description'       => $this->description,
             'image'             => $this->image,
