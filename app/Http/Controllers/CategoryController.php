@@ -66,7 +66,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         // Tampilkan data berupa JSON
-        return (CategoryResource::collection($category))->response()->setStatusCode(200);
+        return (new CategoryResource($category))->response()->setStatusCode(200);
     }
 
     /**

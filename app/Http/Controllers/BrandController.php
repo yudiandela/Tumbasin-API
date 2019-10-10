@@ -66,7 +66,7 @@ class BrandController extends Controller
     public function show(Brand $brand)
     {
         // Tampilkan data berupa JSON
-        return (BrandResource::collection($brand))->response()->setStatusCode(200);
+        return (new BrandResource($brand))->response()->setStatusCode(200);
     }
 
     /**
