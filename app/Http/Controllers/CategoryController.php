@@ -3,10 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Category;
-use App\Helpers\FileUpload;
+use App\Helpers\UrlCheck;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use App\Http\Resources\CategoryResource;
 
 class CategoryController extends Controller
@@ -44,13 +43,13 @@ class CategoryController extends Controller
     {
         $request->validate([
             'name'  => ['required', 'string', 'max:255'],
-            'image' => ['required', 'image', 'mimes:jpg,jpeg,png,gif,bmp,svg']
+            'image' => ['required', 'string']
         ]);
 
         $category = Category::create([
-            'name'        => strtoupper($request->name),
-            'slug'        => Str::slug($request->name),
-            'image'       => url(Storage::url(FileUpload::uploadFile($request)))
+            'name'  => strtoupper($request->name),
+            'slug'  => Str::slug($request->name),
+            'image' => UrlCheck::isUrl($request->image) ? $request->image : ''
         ]);
 
         // Tampilkan data berupa JSON
@@ -90,13 +89,13 @@ class CategoryController extends Controller
     public function update(Request $request, Category $category)
     {
         $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
-            'image'       => ['image', 'mimes:jpg,jpeg,png,gif,bmp']
+            'name'  => ['required', 'string', 'max:255'],
+            'image' => ['string']
         ]);
 
         $category->name  = strtoupper($request->name);
         $category->slug  = Str::slug($request->name);
-        $category->image = $request->hasFile('image') ? url(Storage::url(FileUpload::uploadFile($request))) : $category->image;
+        $category->image = UrlCheck::isUrl($request->image) ? $request->image : $category->image;
         $category->save();
 
         // Tampilkan data berupa JSON

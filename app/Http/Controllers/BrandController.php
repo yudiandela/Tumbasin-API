@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Brand;
-use App\Helpers\FileUpload;
-use App\Http\Resources\BrandResource;
+use App\Helpers\UrlCheck;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Resources\BrandResource;
 
 class BrandController extends Controller
 {
@@ -44,13 +43,13 @@ class BrandController extends Controller
     {
         $request->validate([
             'name'  => ['required', 'string', 'max:255'],
-            'image' => ['required', 'image', 'mimes:jpg,jpeg,png,gif,bmp,svg']
+            'image' => ['required', 'string']
         ]);
 
         $brand = Brand::create([
-            'name'        => strtoupper($request->name),
-            'slug'        => Str::slug($request->name),
-            'image'       => url(Storage::url(FileUpload::uploadFile($request)))
+            'name'  => strtoupper($request->name),
+            'slug'  => Str::slug($request->name),
+            'image' => UrlCheck::isUrl($request->image) ? $request->image : ''
         ]);
 
         // Tampilkan data berupa JSON
@@ -90,13 +89,13 @@ class BrandController extends Controller
     public function update(Request $request, Brand $brand)
     {
         $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
-            'image'       => ['image', 'mimes:jpg,jpeg,png,gif,bmp']
+            'name'  => ['required', 'string', 'max:255'],
+            'image' => ['string']
         ]);
 
         $brand->name  = strtoupper($request->name);
         $brand->slug  = Str::slug($request->name);
-        $brand->image = $request->hasFile('image') ? url(Storage::url(FileUpload::uploadFile($request))) : $brand->image;
+        $brand->image = UrlCheck::isUrl($request->image) ? $request->image : $brand->image;
         $brand->save();
 
         // Tampilkan data berupa JSON

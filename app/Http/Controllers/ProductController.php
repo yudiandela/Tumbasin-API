@@ -5,12 +5,11 @@ namespace App\Http\Controllers;
 use App\Order;
 use App\Product;
 use App\Category;
-use App\Helpers\FileUpload;
+use App\Helpers\UrlCheck;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Resources\ProductResource;
-use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -51,7 +50,7 @@ class ProductController extends Controller
         $request->validate([
             'name'        => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'image'       => ['required', 'image', 'mimes:jpg,jpeg,png,gif,bmp,svg'],
+            'image'       => ['string'],
             'brand_id'    => ['required', 'numeric'],
             'price'       => ['required', 'numeric'],
             'unit'        => ['required', 'string'],
@@ -68,7 +67,7 @@ class ProductController extends Controller
             'slug'              => Str::slug($request->name),
             'short_description' => Str::limit($request->description),
             'description'       => $request->description,
-            'image'             => url(Storage::url(FileUpload::uploadFile($request))),
+            'image'             => UrlCheck::isUrl($request->image) ? $request->image : '',
             'brand_id'          => $request->brand_id,
             'price'             => $request->price,
             'unit'              => $request->unit,
@@ -123,7 +122,7 @@ class ProductController extends Controller
         $request->validate([
             'name'        => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
-            'image'       => ['image', 'mimes:jpg,jpeg,png,gif,bmp,svg'],
+            'image'       => ['string'],
             'brand_id'    => ['required', 'numeric'],
             'price'       => ['required', 'numeric'],
             'unit'        => ['required', 'string'],
@@ -139,7 +138,7 @@ class ProductController extends Controller
         $product->slug              = Str::slug($request->name);
         $product->short_description = Str::limit($request->description);
         $product->description       = $request->description;
-        $product->image             = $request->hasFile('image') ? url(Storage::url(FileUpload::uploadFile($request))) : $product->image;
+        $product->image             = UrlCheck::isUrl($request->image) ? $request->image : $product->image;
         $product->brand_id          = $request->brand_id;
         $product->price             = $request->price;
         $product->unit              = $request->unit;
