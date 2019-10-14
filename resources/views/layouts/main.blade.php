@@ -17,8 +17,13 @@
 <body>
     <header class="border-top border-primary">
         <div class="container my-4">
-            <h1><a href="{{ url('/') }}">API Tumbasin.id</a></h1>
-            <p>Tumbasin Back Office untuk keperluan manajement API</p>
+            <h1>
+                <a href="{{ url('/') }}" class="text-muted">
+                    <strong class="text-primary">API</strong>
+                    Tumbasin.id
+                </a>
+            </h1>
+            <p class="text-muted">Back Office untuk keperluan manajement API di Aplikasi tumbasin.id</p>
         </div>
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary border py-3">

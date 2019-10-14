@@ -11,21 +11,28 @@
 |
 */
 
+// Authentication Route
 Auth::routes();
 
-Route::get('/', 'DashboardController')->name('dashboard.index');
+// Show Index page
+Route::get('/', 'RootController')->name('root.index');
 
-// CRUD Category
-Route::resource('category', 'CategoryController');
+Route::middleware('auth')->group(function () {
+    // Show Dashboard page
+    Route::get('dashboard', 'DashboardController')->name('dashboard.index');
 
-// CRUD brand
-Route::resource('brand', 'BrandController');
+    // CRUD Category
+    Route::resource('category', 'CategoryController');
 
-// CRUD product
-Route::get('product/best-selling', 'ProductController@getBestSelling')->name('product.bestSelling');
-Route::resource('product', 'ProductController');
+    // CRUD brand
+    Route::resource('brand', 'BrandController');
 
-// Order Route
-Route::get('order', 'OrderController@index')->name('order.index');
-Route::get('order/status/{status}', 'OrderController@getStatus')->name('order.getStatus');
-Route::get('order/product/{order}', 'OrderController@showByProduct')->name('order.showByProduct');
+    // CRUD product
+    Route::get('product/best-selling', 'ProductController@getBestSelling')->name('product.bestSelling');
+    Route::resource('product', 'ProductController');
+
+    // Order Route
+    Route::get('order', 'OrderController@index')->name('order.index');
+    Route::get('order/status/{status}', 'OrderController@getStatus')->name('order.getStatus');
+    Route::get('order/product/{order}', 'OrderController@showByProduct')->name('order.showByProduct');
+});
