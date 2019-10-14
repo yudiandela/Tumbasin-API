@@ -11,19 +11,19 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Auth::routes();
+
+Route::get('/', 'DashboardController')->name('dashboard.index');
 
 // CRUD Category
-Route::resource('category', 'CategoryController')->except(['create', 'edit']);
+Route::resource('category', 'CategoryController');
 
 // CRUD brand
-Route::resource('brand', 'BrandController')->except(['create', 'edit']);
+Route::resource('brand', 'BrandController');
 
 // CRUD product
 Route::get('product/best-selling', 'ProductController@getBestSelling')->name('product.bestSelling');
-Route::resource('product', 'ProductController')->except(['create', 'edit']);
+Route::resource('product', 'ProductController');
 
 // Order Route
 Route::get('order', 'OrderController@index')->name('order.index');
