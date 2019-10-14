@@ -10,8 +10,8 @@
 
     <title>Tumbasin API</title>
 
-    <link rel="stylesheet" href="{{ asset('css/bootwatch/cosmo/bootstrap.min.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/font-awesome/css/all.min.css') }}">
+    <link rel="stylesheet" href="/css/bootwatch/cosmo/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/font-awesome/css/all.min.css">
 </head>
 
 <body>
@@ -164,9 +164,9 @@
         </div>
     </footer>
 
-    <script src="{{ asset('js/jquery/jquery.min.js') }}"></script>
-    <script src="{{ asset('js/popper.js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap/bootstrap.min.js') }}"></script>
+    <script src="/js/jquery/jquery.min.js"></script>
+    <script src="/js/popper.js/popper.min.js"></script>
+    <script src="/js/bootstrap/bootstrap.min.js"></script>
 </body>
 
 </html>
