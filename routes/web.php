@@ -12,12 +12,12 @@
 */
 
 // Authentication Route
-Auth::routes();
+Auth::routes(['verify' => true]);
 
 // Show Index page
 Route::get('/', 'RootController')->name('root.index');
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'verified'])->group(function () {
     // Show Dashboard page
     Route::get('dashboard', 'DashboardController')->name('dashboard.index');
 

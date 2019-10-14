@@ -6,19 +6,19 @@
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <h2>{{ __('Verify Your Email Address') }}</h2>
+                    <h2>{{ __('Verifikasi email') }}</h2>
                     @if (session('resent'))
                     <div class="alert alert-success" role="alert">
-                        {{ __('A fresh verification link has been sent to your email address.') }}
+                        {{ __('Tautan verifikasi baru telah dikirim ke alamat email anda.') }}
                     </div>
                     @endif
 
-                    {{ __('Before proceeding, please check your email for a verification link.') }}
-                    {{ __('If you did not receive the email') }},
+                    {{ __('Sebelum melanjutkan, silakan periksa email anda untuk tautan verifikasi.') }}<br />
+                    {{ __('Jika anda tidak menerima email') }},
                     <form class="d-inline" method="POST" action="{{ route('verification.resend') }}">
                         @csrf
                         <button type="submit"
-                            class="btn btn-link p-0 m-0 align-baseline">{{ __('click here to request another') }}</button>.
+                            class="btn btn-link p-0 m-0 align-baseline">{{ __('klik di sini untuk meminta yang lain') }}</button>.
                     </form>
                 </div>
             </div>
