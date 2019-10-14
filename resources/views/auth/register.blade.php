@@ -36,11 +36,7 @@
                         <input type="password" class="form-control" name="password_confirmation" required />
                     </div>
 
-                    <div class="form-group">
-                        <input type="checkbox" name="remember" id="remember"> <label for="remember">Ingat saya</label>
-                    </div>
-
-                    <button type="submit" class="mt-0 btn btn-primary">
+                    <button type="submit" class="btn btn-primary">
                         <i class="mr-1 fas fa-user-plus"></i>
                         Proses Pendaftaran
                     </button>
