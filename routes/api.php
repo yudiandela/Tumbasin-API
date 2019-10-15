@@ -15,14 +15,14 @@ use Illuminate\Http\Request;
 
 Route::name('api.')->group(function () {
     // CRUD brand
-    Route::resource('brand', 'Api\BrandController')->except(['create', 'edit']);
+    Route::resource('brand', 'Api\BrandController')->only(['index', 'show']);
 
     // CRUD Category
-    Route::resource('category', 'Api\CategoryController')->except(['create', 'edit']);
+    Route::resource('category', 'Api\CategoryController')->only(['index', 'show']);
 
     // CRUD product
     Route::get('product/best-selling', 'Api\ProductController@getBestSelling')->name('product.bestSelling');
-    Route::resource('product', 'Api\ProductController')->except(['create', 'edit']);
+    Route::resource('product', 'Api\ProductController')->only(['index', 'show']);
 
     // Order Route
     Route::get('order', 'Api\OrderController@index')->name('order');

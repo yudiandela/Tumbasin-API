@@ -3,12 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Brand;
-use App\Helpers\UrlCheck;
-use App\Helpers\FileUpload;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Facades\Storage;
+use App\Http\Controllers\Action\BrandAction;
 
 class BrandController extends Controller
 {
@@ -19,7 +15,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::all();
+        $brands = BrandAction::index();
         return view('brand.index', compact('brands'));
     }
 
@@ -41,21 +37,7 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name'  => ['required', 'string', 'max:255'],
-            'image' => ['required', 'image', 'mimes:jpg,jpeg,png,svg,gif,bmp']
-        ]);
-
-        // Check Request Image
-        // $image = UrlCheck::isUrl($request->image) ?? $request->image;
-        $image = FileUpload::uploadFile($request);
-
-        Brand::create([
-            'name'  => strtoupper($request->name),
-            'slug'  => Str::slug($request->name),
-            'image' => $image
-        ]);
-
+        BrandAction::store($request);
         return redirect()->route('brand.index')->with('success', 'menambahkan data brand baru');
     }
 
@@ -79,27 +61,7 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        $request->validate([
-            'name'  => ['required', 'string', 'max:255'],
-            'image' => ['mimes:jpg,jpeg,png,svg,gif,bmp']
-        ]);
-
-        // Check Request Image
-        // $image = UrlCheck::isUrl($request->image) ?? $request->image;
-        $image = FileUpload::uploadFile($request);
-
-        if ($image === null) {
-            $image = $brand->image;
-        } else {
-            $imageDel = explode('/', $brand->image);
-            Storage::delete('public/' . Arr::last($imageDel));
-        }
-
-        $brand->name  = $request->name;
-        $brand->slug  = Str::slug($request->name);
-        $brand->image = $image;
-        $brand->save();
-
+        BrandAction::update($request, $brand);
         return redirect()->route('brand.index')->with('success', 'mengubah data brand');
     }
 
