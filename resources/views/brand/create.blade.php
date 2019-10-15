@@ -1,37 +1,44 @@
-@extends('layouts.main')
+@extends('layouts.back')
 
 @section('content')
-<h2>Tambah Merek</h2>
+<h2>Add a new Brand</h2>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-6">
+
         <div class="card">
             <div class="card-body">
 
                 <form action="{{ route('brand.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="col mb-3">
-                        <label for="name">Nama Merek</label>
+                        <label for="name">Brand Name</label><span class="text-danger">*</span>
                         <input type="text" name="name" id="name"
-                            class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" />
+                            class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}"
+                            required />
                         @error('name')
-                        <div class="invalid-tooltip">
+                        <div class="invalid-feedback">
                             {{ $message }}
                         </div>
                         @enderror
                     </div>
 
                     <div class="col mb-3">
-                        <label for="fileImage">File Image</label>
-                        <input type="file" name="image" id="fileImage">
-                        @error('image')
-                        <div class="invalid-tooltip">
-                            {{ $message }}
+                        <label>File Image</label><span class="text-danger">*</span>
+                        <small>jpg,jpeg,png</small>
+                        <div class="custom-file">
+                            <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg"
+                                class="custom-file-input @error('image') is-invalid @enderror" id="image" required>
+                            <label class="custom-file-label" for="image">Pilih file...</label>
+                            @error('image')
+                            <div class="invalid-feedback">
+                                {{ $message }}
+                            </div>
+                            @enderror
                         </div>
-                        @enderror
                     </div>
 
                     <div class="col">
-                        <button class="btn btn-primary btn-block" type="submit">Tambah Merek</button>
+                        <button class="btn btn-primary btn-block" type="submit">Add Brand</button>
                     </div>
 
                 </form>

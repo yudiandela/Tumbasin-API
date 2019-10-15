@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.back')
 
 @section('content')
 <h2>Edit Kategori</h2>
@@ -13,8 +13,9 @@
                     @method('put')
                     <div class="col mb-3">
                         <label for="name">Nama Kategori</label>
-                        <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror"
-                            placeholder="Nama kategori" value="{{ old('name') ?: $category->name }}" />
+                        <input type="text" name="name" id="name"
+                            class="form-control @error('name') is-invalid @enderror" placeholder="Nama kategori"
+                            value="{{ old('name') ?: $category->name }}" />
                         @error('name')
                         <div class="invalid-tooltip">
                             {{ $message }}

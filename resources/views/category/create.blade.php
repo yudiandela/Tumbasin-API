@@ -1,4 +1,4 @@
-@extends('layouts.main')
+@extends('layouts.back')
 
 @section('content')
 <h2>Tambah Kategori</h2>
@@ -11,8 +11,8 @@
                     @csrf
                     <div class="col mb-3">
                         <label for="name">Nama Kategori</label>
-                        <input type="text" name="name" id="name" class="form-control @error('name') is-invalid @enderror"
-                            value="{{ old('name') }}" />
+                        <input type="text" name="name" id="name"
+                            class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" />
                         @error('name')
                         <div class="invalid-tooltip">
                             {{ $message }}

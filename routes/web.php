@@ -20,4 +20,7 @@ Route::get('/', 'RootController')->name('root.index');
 Route::middleware(['auth', 'verified'])->group(function () {
     // Show Dashboard page
     Route::get('dashboard', 'DashboardController')->name('dashboard.index');
+
+    // CRUD Brand
+    Route::resource('brand', 'BrandController')->except(['show']);
 });
