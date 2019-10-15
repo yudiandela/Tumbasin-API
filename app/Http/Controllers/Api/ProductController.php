@@ -1,14 +1,14 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
 use App\Order;
 use App\Product;
-use App\Category;
 use App\Helpers\UrlCheck;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
@@ -26,17 +26,6 @@ class ProductController extends Controller
         return (ProductResource::collection($products))
             ->response()
             ->setStatusCode(200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create(Category $category)
-    {
-        $categories = $category->orderBy('name', 'ASC')->get();
-        return view('product.create', compact('categories'));
     }
 
     /**
@@ -96,18 +85,6 @@ class ProductController extends Controller
         return (new ProductResource($product))
             ->response()
             ->setStatusCode(200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Product $product, Category $category)
-    {
-        $categories = $category->orderBy('name', 'ASC')->get();
-        return view('product.edit', compact('product', 'categories'));
     }
 
     /**

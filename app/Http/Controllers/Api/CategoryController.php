@@ -1,14 +1,15 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Api;
 
-use App\Brand;
+use App\Category;
 use App\Helpers\UrlCheck;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Resources\BrandResource;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\CategoryResource;
 
-class BrandController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,20 +18,10 @@ class BrandController extends Controller
      */
     public function index()
     {
-        $brands = Brand::all();
+        $categories = Category::all();
 
         // Tampilkan data berupa JSON
-        return (BrandResource::collection($brands))->response()->setStatusCode(200);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('brand.create');
+        return (CategoryResource::collection($categories))->response()->setStatusCode(200);
     }
 
     /**
@@ -46,71 +37,60 @@ class BrandController extends Controller
             'image' => ['required', 'string']
         ]);
 
-        $brand = Brand::create([
+        $category = Category::create([
             'name'  => strtoupper($request->name),
             'slug'  => Str::slug($request->name),
             'image' => UrlCheck::isUrl($request->image) ? $request->image : ''
         ]);
 
         // Tampilkan data berupa JSON
-        return (new BrandResource($brand))->response()->setStatusCode(201);
+        return (new CategoryResource($category))->response()->setStatusCode(201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\Brand  $brand
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Brand $brand)
+    public function show(Category $category)
     {
         // Tampilkan data berupa JSON
-        return (new BrandResource($brand))->response()->setStatusCode(200);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Brand  $brand
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Brand $brand)
-    {
-        return view('brand.edit', compact('brand'));
+        return (new CategoryResource($category))->response()->setStatusCode(200);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Brand  $brand
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Brand $brand)
+    public function update(Request $request, Category $category)
     {
         $request->validate([
             'name'  => ['required', 'string', 'max:255'],
             'image' => ['string']
         ]);
 
-        $brand->name  = strtoupper($request->name);
-        $brand->slug  = Str::slug($request->name);
-        $brand->image = UrlCheck::isUrl($request->image) ? $request->image : $brand->image;
-        $brand->save();
+        $category->name  = strtoupper($request->name);
+        $category->slug  = Str::slug($request->name);
+        $category->image = UrlCheck::isUrl($request->image) ? $request->image : $category->image;
+        $category->save();
 
         // Tampilkan data berupa JSON
-        return (new BrandResource($brand))->response()->setStatusCode(201);
+        return (new CategoryResource($category))->response()->setStatusCode(201);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Brand  $brand
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy(Category $category)
     {
-        $brand->delete();
+        $category->delete();
 
         // Tampilkan data berupa JSON
         return response()->json([
