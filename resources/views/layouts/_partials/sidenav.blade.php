@@ -9,7 +9,7 @@
     <a class="nav-link border-right" href="{{ route('category.index') }}">
         <i class="mr-1 fas fa-archive"></i> Categories
     </a>
-    <a class="nav-link border-right" href="#">
+    <a class="nav-link border-right" href="{{ route('product.index') }}">
         <i class="mr-1 fas fa-box-open"></i> Products
     </a>
     <a class="nav-link border-right" href="#">

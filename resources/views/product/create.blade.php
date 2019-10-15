@@ -3,30 +3,27 @@
 @section('content')
 
 <form action="{{ route('product.store') }}" method="POST" enctype="multipart/form-data">
-    <div class="card mb-5">
+    <h2>Add a new Product</h2>
 
-        <div class="card-header">
-            <h2>Tambah data Product</h2>
-        </div>
-
+    <div class="card">
         <div class="card-body">
             @csrf
             <div class="row">
                 <div class="col-md-6">
                     <div class="form-group">
-                        <label for="name">Product Name</label>
+                        <label for="name">Product Name</label><span class="text-danger">*</span>
                         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror"
-                            id="name" value="{{ old('name') }}">
-                        @error('title')
+                            id="name" value="{{ old('name') }}" required>
+                        @error('name')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="form-group">
-                        <label for="description">Description</label>
+                        <label for="description">Description</label><span class="text-danger">*</span>
                         <textarea type="text" name="description"
-                            class="form-control @error('description') is-invalid @enderror" id="description"
-                            rows="5">{{ old('description') }}</textarea>
+                            class="form-control @error('description') is-invalid @enderror" id="description" rows="5"
+                            required>{{ old('description') }}</textarea>
                         @error('description')
                         <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -34,12 +31,13 @@
                 </div>
                 <div class="col-md-6">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="category">Kategori</label>
+                                <label for="category">Category</label><span class="text-danger">*</span>
                                 <select name="category_id" class="custom-select">
                                     @foreach ($categories as $category)
-                                    <option value="{{ $category->id }}">
+                                    <option {{ old('category_id') == $category->id ? 'selected' : '' }}
+                                        value="{{ $category->id }}">
                                         {{ $category->name }}
                                     </option>
                                     @endforeach
@@ -47,24 +45,41 @@
                             </div>
                         </div>
 
-                        <div class="col-md-8">
+                        <div class="col-md-6">
                             <div class="form-group">
-                                <label for="image">Image</label>
-                                <input name="image" type="file"
-                                    class="form-control-file @error('image') is-invalid @enderror" id="image"
-                                    aria-describedby="fileHelp">
+                                <label for="brand">Brand</label><span class="text-danger">*</span>
+                                <select name="brand_id" class="custom-select">
+                                    @foreach ($brands as $brand)
+                                    <option {{ old('brand_id') == $brand->id ? 'selected' : '' }}
+                                        value="{{ $brand->id }}">
+                                        {{ $brand->name }}
+                                    </option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-3">
+                            <label>File Image</label><span class="text-danger">*</span>
+                            <small>jpg,jpeg,png</small>
+                            <div class="custom-file">
+                                <input type="file" name="image" accept="image/x-png,image/gif,image/jpeg"
+                                    class="custom-file-input @error('image') is-invalid @enderror" id="image" required>
+                                <label class="custom-file-label" for="image">Pilih file...</label>
                                 @error('image')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                                 @enderror
                             </div>
                         </div>
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="price">Harga</label>
+                                <label for="price">Price</label><span class="text-danger">*</span>
                                 <input type="text" name="price"
                                     class="form-control @error('price') is-invalid @enderror" id="price"
-                                    value="{{ old('price') }}">
+                                    value="{{ old('price') }}" required>
                                 @error('price')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -73,9 +88,10 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="unit">Unit</label>
+                                <label for="unit">Unit</label><span class="text-danger">*</span>
+                                <small>pcs, box</small>
                                 <input type="text" name="unit" class="form-control @error('unit') is-invalid @enderror"
-                                    id="unit" value="{{ old('unit') }}">
+                                    id="unit" value="{{ old('unit') }}" required>
                                 @error('unit')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -84,10 +100,10 @@
 
                         <div class="col-md-4">
                             <div class="form-group">
-                                <label for="stock">Stock</label>
+                                <label for="stock">Stock</label><span class="text-danger">*</span>
                                 <input type="text" name="stock"
                                     class="form-control @error('stock') is-invalid @enderror" id="stock"
-                                    value="{{ old('stock') }}">
+                                    value="{{ old('stock') }}" required>
                                 @error('stock')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -96,10 +112,10 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="weight">Berat</label>
+                                <label for="weight">Weight</label><span class="text-danger">*</span>
                                 <input type="text" name="weight"
                                     class="form-control @error('weight') is-invalid @enderror" id="weight"
-                                    value="{{ old('weight') }}">
+                                    value="{{ old('weight') }}" required>
                                 @error('weight')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -108,10 +124,10 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="length">Panjang</label>
+                                <label for="length">Length</label><span class="text-danger">*</span>
                                 <input type="text" name="length"
                                     class="form-control @error('length') is-invalid @enderror" id="length"
-                                    value="{{ old('length') }}">
+                                    value="{{ old('length') }}" required>
                                 @error('length')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -120,10 +136,10 @@
 
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="width">Lebar</label>
+                                <label for="width">Width</label><span class="text-danger">*</span>
                                 <input type="text" name="width"
                                     class="form-control @error('width') is-invalid @enderror" id="width"
-                                    value="{{ old('width') }}">
+                                    value="{{ old('width') }}" required>
                                 @error('width')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -131,10 +147,10 @@
                         </div>
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="height">Tinggi</label>
+                                <label for="height">Height</label><span class="text-danger">*</span>
                                 <input type="text" name="height"
                                     class="form-control @error('height') is-invalid @enderror" id="height"
-                                    value="{{ old('height') }}">
+                                    value="{{ old('height') }}" required>
                                 @error('height')
                                 <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
@@ -145,9 +161,7 @@
             </div>
         </div>
 
-        <div class="card-footer">
-            <button class="btn btn-primary float-right" type="submit">Masukkan Data</button>
-        </div>
     </div>
+    <button class="mt-2 btn btn-primary float-right" type="submit">Masukkan Data Product</button>
 </form>
 @endsection

@@ -8,9 +8,10 @@ use Faker\Generator as Faker;
 
 $factory->define(Product::class, function (Faker $faker) {
 
-    $name   = getName($faker);
-    $units  = getUnits($faker);
-    $images = getImages($faker);
+    $number      = rand(0, count(getName()));
+    $name        = Arr::get(getName(), $number);
+    $image       = Arr::get(getImages(), $number);
+    $units       = getUnits($faker);
     $description = $faker->paragraphs(6, true);
 
     return [
@@ -19,11 +20,11 @@ $factory->define(Product::class, function (Faker $faker) {
         'slug'              => Str::slug($name),
         'short_description' => Str::limit($description),
         'description'       => $description,
-        'image'             => $images,
+        'image'             => $image,
         'brand_id'          => $faker->numberBetween(1, 4),
         'price'             => $faker->numberBetween(10000, 100000),
         'unit'              => $units,
-        'stock'             => $faker->numberBetween(10000, 100000),
+        'stock'             => $faker->numberBetween(100, 200),
         'weight'            => $faker->numberBetween(0, 20),
         'length'            => $faker->numberBetween(0, 20),
         'width'             => $faker->numberBetween(0, 20),
@@ -45,12 +46,11 @@ function getUnits($faker)
 /**
  * Mengambil data Nama Product
  *
- * @param   $faker
  * @return  Array
  */
-function getName($faker)
+function getName()
 {
-    return $faker->unique()->randomElement([
+    return [
         'Asam Jawa',
         'Asam Kandis',
         'Bawang Merah',
@@ -128,18 +128,17 @@ function getName($faker)
         'Temulawak Kering',
         'Terasi Besar',
         'Terasi Kecil'
-    ]);
+    ];
 }
 
 /**
  * Mengambil data Images dari Array
  *
- * @param   $faker
  * @return  Array
  */
-function getImages($faker)
+function getImages()
 {
-    return $faker->unique()->randomElement([
+    return [
         'https://wp.tumbasin.id/wp-content/uploads/2019/06/asam-jawa_20150430_140800-compressor.jpg',
         'https://wp.tumbasin.id/wp-content/uploads/2019/06/asam-kandis-compressor.png',
         'https://wp.tumbasin.id/wp-content/uploads/2019/06/Bawang-Merah-compressor.png',
@@ -217,5 +216,5 @@ function getImages($faker)
         'https://wp.tumbasin.id/wp-content/uploads/2019/06/temulawak-kering-compressor.png',
         'https://wp.tumbasin.id/wp-content/uploads/2019/06/terasi-besar-compressor.png',
         'https://wp.tumbasin.id/wp-content/uploads/2019/06/terasi-kecil-compressor.png'
-    ]);
+    ];
 }
