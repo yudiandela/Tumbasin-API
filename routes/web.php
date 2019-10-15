@@ -23,4 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     // CRUD Brand
     Route::resource('brand', 'BrandController')->except(['show']);
+
+    // CRUD Category
+    Route::resource('category', 'CategoryController')->except(['show']);
 });

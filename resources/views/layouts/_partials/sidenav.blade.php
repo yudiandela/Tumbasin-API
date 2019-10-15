@@ -6,7 +6,7 @@
     <a class="nav-link border-right" href="{{ route('brand.index') }}">
         <i class="mr-1 fas fa-tags"></i> Brands
     </a>
-    <a class="nav-link border-right" href="#">
+    <a class="nav-link border-right" href="{{ route('category.index') }}">
         <i class="mr-1 fas fa-archive"></i> Categories
     </a>
     <a class="nav-link border-right" href="#">

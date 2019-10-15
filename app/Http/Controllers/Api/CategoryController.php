@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Category;
 use App\Helpers\UrlCheck;
+use App\Http\Controllers\Action\CategoryAction;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -18,8 +19,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
-
+        $categories = CategoryAction::index();
         // Tampilkan data berupa JSON
         return (CategoryResource::collection($categories))->response()->setStatusCode(200);
     }
@@ -32,17 +32,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name'  => ['required', 'string', 'max:255'],
-            'image' => ['required', 'string']
-        ]);
-
-        $category = Category::create([
-            'name'  => strtoupper($request->name),
-            'slug'  => Str::slug($request->name),
-            'image' => UrlCheck::isUrl($request->image) ? $request->image : ''
-        ]);
-
+        CategoryAction::store($request);
         // Tampilkan data berupa JSON
         return (new CategoryResource($category))->response()->setStatusCode(201);
     }
