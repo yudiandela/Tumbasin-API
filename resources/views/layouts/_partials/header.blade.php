@@ -8,7 +8,7 @@
 
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>Tumbasin API</title>
+    <title>Tumbasin.id</title>
 
     <link rel="stylesheet" href="/css/bootwatch/cosmo/bootstrap.min.css">
     <link rel="stylesheet" href="/css/font-awesome/css/all.min.css">
@@ -18,12 +18,14 @@
     <header class="border-top border-primary">
         <div class="container my-4">
             <h1>
-                <a href="{{ url('/') }}" class="text-muted">
-                    <strong class="text-primary">API</strong>
-                    Tumbasin.id
+                <a href="{{ url('/') }}">
+                    Tumbasin.<strong>id</strong>
                 </a>
             </h1>
-            <p class="text-muted">Back Office untuk keperluan manajement API di Aplikasi tumbasin.id</p>
+            <p class="text-muted">
+                Mengantarkan bahan makanan dan kebutuhan sehari-hari dari Pasar ke depan pintu rumah Anda. <br> Belanja
+                hari ini kami antar besok hari.
+            </p>
         </div>
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary border py-3">

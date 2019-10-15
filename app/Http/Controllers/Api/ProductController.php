@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProductResource;
+use App\Http\Controllers\Action\ProductAction;
 
 class ProductController extends Controller
 {
@@ -20,7 +21,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = ProductAction::index();
 
         // return data berupa object
         return (ProductResource::collection($products))
@@ -36,37 +37,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
-            'image'       => ['string'],
-            'brand_id'    => ['required', 'numeric'],
-            'price'       => ['required', 'numeric'],
-            'unit'        => ['required', 'string'],
-            'stock'       => ['required', 'numeric'],
-            'weight'      => ['required', 'string'],
-            'length'      => ['required', 'string'],
-            'width'       => ['required', 'string'],
-            'height'      => ['required', 'string']
-        ]);
-
-        $product = Product::create([
-            'category_id'       => $request->category_id,
-            'name'              => $request->name,
-            'slug'              => Str::slug($request->name),
-            'short_description' => Str::limit($request->description),
-            'description'       => $request->description,
-            'image'             => UrlCheck::isUrl($request->image) ? $request->image : '',
-            'brand_id'          => $request->brand_id,
-            'price'             => $request->price,
-            'unit'              => $request->unit,
-            'stock'             => $request->stock,
-            'weight'            => $request->weight,
-            'length'            => $request->length,
-            'width'             => $request->width,
-            'height'            => $request->height
-        ]);
-
+        $product = ProductAction::store($request);
         // return data berupa object
         return (new ProductResource($product))
             ->response()
@@ -96,36 +67,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product)
     {
-        $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
-            'description' => ['required', 'string'],
-            'image'       => ['string'],
-            'brand_id'    => ['required', 'numeric'],
-            'price'       => ['required', 'numeric'],
-            'unit'        => ['required', 'string'],
-            'stock'       => ['required', 'numeric'],
-            'weight'      => ['required', 'string'],
-            'length'      => ['required', 'string'],
-            'width'       => ['required', 'string'],
-            'height'      => ['required', 'string']
-        ]);
-
-        $product->category_id       = $request->category_id;
-        $product->name              = $request->name;
-        $product->slug              = Str::slug($request->name);
-        $product->short_description = Str::limit($request->description);
-        $product->description       = $request->description;
-        $product->image             = UrlCheck::isUrl($request->image) ? $request->image : $product->image;
-        $product->brand_id          = $request->brand_id;
-        $product->price             = $request->price;
-        $product->unit              = $request->unit;
-        $product->stock             = $request->stock;
-        $product->weight            = $request->weight;
-        $product->length            = $request->length;
-        $product->width             = $request->width;
-        $product->height            = $request->height;
-        $product->save();
-
+        $product = ProductAction::update($request, $product);
         // return data berupa object
         return (new ProductResource($product))
             ->response()
@@ -152,17 +94,9 @@ class ProductController extends Controller
      *
      * @return  JSON
      */
-    public function getBestSelling()
+    public function topSeller()
     {
-        $orders = Order::select('product_id', DB::raw('count(product_id) as count'))
-            ->where('status', '>', 1)
-            ->orderBy('count', 'DESC')
-            ->groupBy('product_id');
-
-        $products = Product::joinSub($orders, 'orders', function ($join) {
-            $join->on('products.id', '=', 'orders.product_id');
-        })->get();
-
+        $products = ProductAction::topSeller();
         // Menampilkan data Product Collection
         return (ProductResource::collection($products))
             ->response()

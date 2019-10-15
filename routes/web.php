@@ -28,5 +28,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('category', 'CategoryController')->except(['show']);
 
     // CRUD Product
+    Route::get('product/top-seller', 'ProductController@topSeller')->name('product.topseller');
     Route::resource('product', 'ProductController');
 });

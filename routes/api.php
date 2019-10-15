@@ -21,7 +21,7 @@ Route::name('api.')->group(function () {
     Route::resource('category', 'Api\CategoryController')->only(['index', 'show']);
 
     // CRUD product
-    Route::get('product/best-selling', 'Api\ProductController@getBestSelling')->name('product.bestSelling');
+    Route::get('product/top-seller', 'Api\ProductController@topSeller')->name('product.topSeller');
     Route::resource('product', 'Api\ProductController')->only(['index', 'show']);
 
     // Order Route

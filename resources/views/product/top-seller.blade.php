@@ -1,22 +1,13 @@
 @extends('layouts.back')
 
 @section('content')
-@if (session('success'))
-
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    <strong>Berhasil!</strong> {{ session('success') }}.
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
-@endif
 <div class="mb-2">
-    <h2 class="d-inline">List All Products</h2>
+    <h2 class="d-inline">Products Top Seller</h2>
     <a href="{{ route('product.create') }}" class="float-right btn btn-primary">
         <i class="mr-1 fas fa-plus"></i> Create a new Product
     </a>
-    <a href="{{ route('product.topseller') }}" class="mr-2 float-right btn btn-success">
-        <i class="mr-1 fas fa-star"></i> Top Seller
+    <a href="{{ route('product.index') }}" class="mr-2 float-right btn btn-info">
+        <i class="mr-1 fas fa-box"></i> List all Products
     </a>
 </div>
 <table class="table">
