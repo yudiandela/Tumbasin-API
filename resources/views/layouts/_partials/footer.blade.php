@@ -36,11 +36,15 @@
 <script src="/js/jquery/jquery.min.js"></script>
 <script src="/js/popper.js/popper.min.js"></script>
 <script src="/js/bootstrap/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
 <script>
     $('#image').on('change',function(){
         let fileName = $(this).val().replace('C:\\fakepath\\', " ");
         $(this).next('.custom-file-label').html(fileName);
     });
+
+    $('.table').DataTable();
 </script>
 @stack('scripts')
 </body>
