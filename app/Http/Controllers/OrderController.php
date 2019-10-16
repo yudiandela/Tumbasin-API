@@ -6,6 +6,7 @@ use App\User;
 use App\Order;
 use App\Product;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Action\OrderAction;
 
 class OrderController extends Controller
 {
@@ -16,7 +17,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::latest()->get();
+        $orders = OrderAction::index();
         return view('order.index', compact('orders'));
     }
 
@@ -41,20 +42,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'product_id' => ['required']
-        ]);
-
-        for ($i = 0; $i < count($request->product_id); $i++) {
-            Order::create([
-                'order_number' => $request->order_number,
-                'user_id'      => $request->user_id,
-                'product_id'   => $request->product_id[$i],
-                'quantity'     => $request->quantity[$i],
-                'total'        => $request->quantity[$i] * $request->price[$i],
-            ]);
-        }
-
+        OrderAction::store($request);
         return redirect()->route('order.index')->with('success', 'menambahkan order baru');
     }
 
@@ -79,7 +67,7 @@ class OrderController extends Controller
      */
     public function showByProduct($id)
     {
-        $orders = Order::where('product_id', $id)->get();
+        $orders = OrderAction::where('product_id', $id);
         return view('order.index', compact('orders'));
     }
 
@@ -91,7 +79,7 @@ class OrderController extends Controller
      */
     public function getStatus($id)
     {
-        $orders = Order::where('status', $id)->get();
+        $orders = OrderAction::where('status', $id);
         return view('order.index', compact('orders'));
     }
 
@@ -119,7 +107,7 @@ class OrderController extends Controller
      */
     public function byOrderNumber($id)
     {
-        $orders = Order::where('order_number', $id)->get();
+        $orders = OrderAction::where('order_number', $id);
         $orderNumber = $orders[0]->order_number;
         $user = $orders[0]->user->name;
         $price = Order::select('total')->where('order_number', $id)->get();

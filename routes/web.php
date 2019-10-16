@@ -32,9 +32,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::resource('product', 'ProductController');
 
     // Order Route
-    Route::resource('order', 'OrderController');
+    Route::resource('order', 'OrderController')->except(['edit', 'update', 'show']);
     Route::get('order/status/{status}', 'OrderController@getStatus')->name('order.getByStatus');
-    Route::patch('order/status/{id}/change', 'OrderController@changeStatus')->name('order.change.status');
+    Route::put('order/status/{id}/change', 'OrderController@changeStatus')->name('order.change.status');
+    Route::patch('order/status/{id}/change', 'OrderController@changeStatus');
     Route::get('order/product/{order}', 'OrderController@showByProduct')->name('order.showByProduct');
     Route::get('order/order-number/{id}', 'OrderController@byOrderNumber')->name('order.byOrderNumber');
 });

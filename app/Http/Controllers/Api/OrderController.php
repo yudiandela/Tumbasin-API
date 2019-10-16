@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\User;
 use App\Order;
+use App\Product;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\OrderResource;
+use App\Http\Controllers\Action\OrderAction;
 
 class OrderController extends Controller
 {
@@ -15,24 +19,21 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = Order::get();
-
-        // Tampilkan data berupa JSON
+        $orders = OrderAction::index();        // Tampilkan data berupa JSON
         return (OrderResource::collection($orders))->response()->setStatusCode(200);
     }
 
     /**
-     * Tampilkan berdasarkan status terpilih
+     * Store a newly created resource in storage.
      *
-     * @param  integer  $id
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function getStatus($id)
+    public function store(Request $request)
     {
-        $order = Order::where('status', $id)->get();
-
-        // Tampilkan data berupa JSON
-        return (OrderResource::collection($order))->response()->setStatusCode(200);
+        $order = OrderAction::store($request);
+        // return (new OrderResource($order))->response()->setStatusCode(201);
+        return response()->json($order, 201);
     }
 
     /**
@@ -44,8 +45,52 @@ class OrderController extends Controller
      */
     public function showByProduct($id)
     {
-        $order = Order::where('product_id', $id)->get();
-        // Tampilkan data berupa JSON
-        return (OrderResource::collection($order))->response()->setStatusCode(200);
+        $orders = OrderAction::where('product_id', $id);
+        return (OrderResource::collection($orders))->response()->setStatusCode(200);
+    }
+
+    /**
+     * Tampilkan product berdasarkan status terpilih
+     *
+     * @param  integer  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function getStatus($id)
+    {
+        $orders = OrderAction::where('status', $id);
+        return (OrderResource::collection($orders))->response()->setStatusCode(200);
+    }
+
+    /**
+     * Ubah status Order
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  integer  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function changeStatus(Request $request, $id)
+    {
+        Order::where('id', $id)->update([
+            'status' => $request->status
+        ]);
+        return response()->json([
+            'message' => 'Status Changed'
+        ]);
+    }
+
+    /**
+     * Tampilkan product berdasarkan order number
+     *
+     * @param  integer  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function byOrderNumber($id)
+    {
+        $orders = OrderAction::where('order_number', $id);
+        $orderNumber = $orders[0]->order_number;
+        $user = $orders[0]->user->name;
+        $price = Order::select('total')->where('order_number', $id)->get();
+        $total = $price->sum('total');
+        return (OrderResource::collection($orders))->response()->setStatusCode(200);
     }
 }
