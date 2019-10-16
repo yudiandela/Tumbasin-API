@@ -45,10 +45,10 @@
                         </li>
                         <li class="nav-item">
                             <a target="_blank"
-                                href="https://documenter.getpostman.com/view/1379625/SVtWw7SH?version=latest"
+                                href="https://documenter.getpostman.com/view/1379625/SVtYTnLs"
                                 class="nav-link">
                                 <i class="mr-1 fas fa-book"></i>
-                                {{ __('Dokumentasi') }}
+                                {{ __('Dokumentasi API') }}
                             </a>
                         </li>
                         <li class="nav-item dropdown">
