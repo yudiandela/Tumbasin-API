@@ -8,7 +8,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Product::class, function (Faker $faker) {
 
-    $number      = rand(0, count(getName()));
+    $number      = rand(0, count(getName()) - 1);
     $name        = Arr::get(getName(), $number);
     $image       = Arr::get(getImages(), $number);
     $units       = getUnits($faker);
