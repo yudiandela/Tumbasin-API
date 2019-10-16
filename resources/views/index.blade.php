@@ -6,7 +6,7 @@
         <div class="card">
             <div class="card-body">
                 <h2 class="font-weight-bold">Selamat Datang</h2>
-                Situs resmi penyedia API tumbasin.id
+                Halaman depan {{ config('app.name') }}
             </div>
         </div>
     </div>
