@@ -30,4 +30,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // CRUD Product
     Route::get('product/top-seller', 'ProductController@topSeller')->name('product.topseller');
     Route::resource('product', 'ProductController');
+
+    // Order Route
+    Route::resource('order', 'OrderController');
+    Route::get('order/status/{status}', 'OrderController@getStatus')->name('order.getByStatus');
+    Route::patch('order/status/{id}/change', 'OrderController@changeStatus')->name('order.change.status');
+    Route::get('order/product/{order}', 'OrderController@showByProduct')->name('order.showByProduct');
+    Route::get('order/order-number/{id}', 'OrderController@byOrderNumber')->name('order.byOrderNumber');
 });
+

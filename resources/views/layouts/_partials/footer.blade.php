@@ -38,11 +38,11 @@
 <script src="/js/bootstrap/bootstrap.min.js"></script>
 <script>
     $('#image').on('change',function(){
-        //get the file name
-        var fileName = $(this).val().replace('C:\\fakepath\\', " ");
+        let fileName = $(this).val().replace('C:\\fakepath\\', " ");
         $(this).next('.custom-file-label').html(fileName);
-    })
+    });
 </script>
+@stack('scripts')
 </body>
 
 </html>
