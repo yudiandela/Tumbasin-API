@@ -19,7 +19,7 @@
         <i class="mr-1 fas fa-star"></i> Top Seller
     </a>
 </div>
-<table class="table">
+<table class="table datatable">
     <thead>
         <tr>
             <th>#</th>

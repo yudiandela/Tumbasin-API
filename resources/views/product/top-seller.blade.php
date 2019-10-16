@@ -10,7 +10,7 @@
         <i class="mr-1 fas fa-box"></i> List all Products
     </a>
 </div>
-<table class="table">
+<table class="table datatable">
     <thead>
         <tr>
             <th>#</th>

@@ -15,7 +15,7 @@
         <i class="mr-1 fas fa-plus"></i> Create a new Order
     </a>
 </div>
-<table class="table">
+<table class="table datatable">
     <thead>
         <tr>
             <th>#</th>

@@ -44,7 +44,7 @@
         $(this).next('.custom-file-label').html(fileName);
     });
 
-    $('.table').DataTable();
+    $('.datatable').DataTable();
 </script>
 @stack('scripts')
 </body>
