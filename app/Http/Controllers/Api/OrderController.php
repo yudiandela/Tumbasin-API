@@ -75,7 +75,7 @@ class OrderController extends Controller
         ]);
         return response()->json([
             'message' => 'Status Changed'
-        ]);
+        ], 201);
     }
 
     /**

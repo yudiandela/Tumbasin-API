@@ -46,7 +46,7 @@
                         </li>
                         <li class="nav-item">
                             <a target="_blank"
-                                href="https://documenter.getpostman.com/view/1379625/SVtYTnLs"
+                                href="https://documenter.getpostman.com/view/1379625/SVtZtk91"
                                 class="nav-link">
                                 <i class="mr-1 fas fa-book"></i>
                                 {{ __('Dokumentasi API') }}

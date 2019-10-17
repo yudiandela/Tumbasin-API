@@ -27,8 +27,7 @@ Route::name('api.')->group(function () {
     // Order Route
     Route::resource('order', 'Api\OrderController')->except(['edit', 'update', 'show']);
     Route::get('order/status/{status}', 'Api\OrderController@getStatus')->name('order.getByStatus');
-    Route::put('order/status/{id}/change', 'Api\OrderController@changeStatus')->name('order.change.status');
-    Route::patch('order/status/{id}/change', 'Api\OrderController@changeStatus');
+    Route::match(['put', 'patch'], 'order/status/{id}/change', 'Api\OrderController@changeStatus')->name('order.change.status');
     Route::get('order/product/{order}', 'Api\OrderController@showByProduct')->name('order.showByProduct');
     Route::get('order/order-number/{id}', 'Api\OrderController@byOrderNumber')->name('order.byOrderNumber');
 });
