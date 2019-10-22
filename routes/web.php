@@ -21,6 +21,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     // Show Dashboard page
     Route::get('dashboard', 'DashboardController')->name('dashboard.index');
 
+    // Get Api Key
+    Route::get('apikey', 'ApiTokenController@index')->name('apikey.index');
+    Route::put('apikey/update', 'ApiTokenController@update')->name('apikey.update');
+
     // CRUD Brand
     Route::resource('brand', 'BrandController')->except(['show']);
 
@@ -38,4 +42,3 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('order/product/{order}', 'OrderController@showByProduct')->name('order.showByProduct');
     Route::get('order/order-number/{id}', 'OrderController@byOrderNumber')->name('order.byOrderNumber');
 });
-
