@@ -49,7 +49,7 @@
     "prefer-stable": true,
     "scripts": {
         "post-install-cmd": [
-            "@php artisan migrate"
+            "@php artisan migrate --force"
         ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
