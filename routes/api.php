@@ -13,7 +13,7 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->name('api.')->group(function () {
+Route::middleware('auth:api')->name('api.')->prefix('v1')->group(function () {
     // CRUD brand
     Route::resource('brand', 'Api\BrandController')->only(['index', 'show']);
 
