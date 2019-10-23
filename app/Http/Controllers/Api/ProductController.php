@@ -2,15 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Order;
 use App\Product;
-use App\Helpers\UrlCheck;
-use Illuminate\Support\Str;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ProductResource;
 use App\Http\Controllers\Action\ProductAction;
+use App\Http\Resources\ProductResource;
 
 class ProductController extends Controller
 {
@@ -23,25 +18,13 @@ class ProductController extends Controller
     {
         $products = ProductAction::index();
 
-        // return data berupa object
-        return (ProductResource::collection($products))
-            ->response()
-            ->setStatusCode(200);
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        $product = ProductAction::store($request);
-        // return data berupa object
-        return (new ProductResource($product))
-            ->response()
-            ->setStatusCode(201);
+        return response()->json([
+            'status' => [
+                'code' => 200,
+                'description' => 'OK'
+            ],
+            'result' => ProductResource::collection($products)
+        ], 200);
     }
 
     /**
@@ -52,40 +35,12 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        // return data berupa object
-        return (new ProductResource($product))
-            ->response()
-            ->setStatusCode(200);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, Product $product)
-    {
-        $product = ProductAction::update($request, $product);
-        // return data berupa object
-        return (new ProductResource($product))
-            ->response()
-            ->setStatusCode(201);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Product  $product
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Product $product)
-    {
-        $product->delete();
-        // return data berupa object
         return response()->json([
-            'message' => 'deleted'
+            'status' => [
+                'code' => 200,
+                'description' => 'OK'
+            ],
+            'result' => new ProductResource($product)
         ], 200);
     }
 
@@ -97,9 +52,13 @@ class ProductController extends Controller
     public function topSeller()
     {
         $products = ProductAction::topSeller();
-        // Menampilkan data Product Collection
-        return (ProductResource::collection($products))
-            ->response()
-            ->setStatusCode(200);
+
+        return response()->json([
+            'status' => [
+                'code' => 200,
+                'description' => 'OK'
+            ],
+            'result' => ProductResource::collection($products)
+        ], 200);
     }
 }

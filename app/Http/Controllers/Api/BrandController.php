@@ -3,10 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Brand;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\BrandResource;
 use App\Http\Controllers\Action\BrandAction;
+use App\Http\Resources\BrandResource;
 
 class BrandController extends Controller
 {
@@ -18,7 +17,14 @@ class BrandController extends Controller
     public function index()
     {
         $brands = BrandAction::index();
-        return (BrandResource::collection($brands))->response()->setStatusCode(200);
+
+        return response()->json([
+            'status' => [
+                'code' => 200,
+                'description' => 'OK'
+            ],
+            'result' => BrandResource::collection($brands)
+        ], 200);
     }
 
     /**
@@ -29,6 +35,12 @@ class BrandController extends Controller
      */
     public function show(Brand $brand)
     {
-        return (new BrandResource($brand))->response()->setStatusCode(200);
+        return response()->json([
+            'status' => [
+                'code' => 200,
+                'description' => 'OK'
+            ],
+            'result' => new BrandResource($brand)
+        ], 200);
     }
 }

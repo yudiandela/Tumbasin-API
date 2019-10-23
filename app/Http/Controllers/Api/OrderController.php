@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\User;
 use App\Order;
-use App\Product;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Resources\OrderResource;
 use App\Http\Controllers\Action\OrderAction;
+use App\Http\Resources\OrderResource;
 
 class OrderController extends Controller
 {
@@ -19,8 +17,15 @@ class OrderController extends Controller
      */
     public function index()
     {
-        $orders = OrderAction::index();        // Tampilkan data berupa JSON
-        return (OrderResource::collection($orders))->response()->setStatusCode(200);
+        $orders = OrderAction::index();
+
+        return response()->json([
+            'status' => [
+                'code' => 200,
+                'description' => 'OK'
+            ],
+            'result' => OrderResource::collection($orders)
+        ], 200);
     }
 
     /**
@@ -32,8 +37,14 @@ class OrderController extends Controller
     public function store(Request $request)
     {
         $order = OrderAction::store($request);
-        // return (new OrderResource($order))->response()->setStatusCode(201);
-        return response()->json($order, 201);
+
+        return response()->json([
+            'status' => [
+                'code' => 201,
+                'description' => 'Created'
+            ],
+            'result' => $order
+        ], 201);
     }
 
     /**
@@ -46,7 +57,14 @@ class OrderController extends Controller
     public function showByProduct($id)
     {
         $orders = OrderAction::where('product_id', $id);
-        return (OrderResource::collection($orders))->response()->setStatusCode(200);
+
+        return response()->json([
+            'status' => [
+                'code' => 200,
+                'description' => 'OK'
+            ],
+            'result' => OrderResource::collection($orders)
+        ], 200);
     }
 
     /**
@@ -58,7 +76,14 @@ class OrderController extends Controller
     public function getStatus($id)
     {
         $orders = OrderAction::where('status', $id);
-        return (OrderResource::collection($orders))->response()->setStatusCode(200);
+
+        return response()->json([
+            'status' => [
+                'code' => 200,
+                'description' => 'OK'
+            ],
+            'result' => OrderResource::collection($orders)
+        ], 200);
     }
 
     /**
@@ -73,8 +98,13 @@ class OrderController extends Controller
         Order::where('id', $id)->update([
             'status' => $request->status
         ]);
+
         return response()->json([
-            'message' => 'Status Changed'
+            'status' => [
+                'code' => 201,
+                'description' => 'Created'
+            ],
+            'result' => 'Status Changed'
         ], 201);
     }
 
@@ -87,10 +117,13 @@ class OrderController extends Controller
     public function byOrderNumber($id)
     {
         $orders = OrderAction::where('order_number', $id);
-        $orderNumber = $orders[0]->order_number;
-        $user = $orders[0]->user->name;
-        $price = Order::select('total')->where('order_number', $id)->get();
-        $total = $price->sum('total');
-        return (OrderResource::collection($orders))->response()->setStatusCode(200);
+
+        return response()->json([
+            'status' => [
+                'code' => 200,
+                'description' => 'OK'
+            ],
+            'result' => OrderResource::collection($orders)
+        ], 200);
     }
 }
