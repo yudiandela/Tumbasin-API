@@ -2,8 +2,6 @@
 
 ## Tumbasin API
 
-Demo => [Klik Disini](https://tumbasin-id.herokuapp.com)
-
-## Dokumentasi
+### Dokumentasi API
 
 Dokumentasi [Postman Docs](https://documenter.getpostman.com/view/1379625/SVtZtk91)
