@@ -80,4 +80,15 @@ class CategoryAction
             'image' => $image,
         ]);
     }
+
+    /**
+     * Destroy the specified resource in storage.
+     *
+     * @param  \App\Category  $category
+     * @return \Illuminate\Http\Response
+     */
+    public static function destroy($category)
+    {
+        return $category->delete();
+    }
 }
