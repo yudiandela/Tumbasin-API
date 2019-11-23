@@ -141,7 +141,7 @@ class ProductAction
      *
      * @return \Illuminate\Http\Response
      */
-    public static function topSeller()
+    public static function bestSeller()
     {
         $orders = Order::select('product_id', DB::raw('count(product_id) as count'))
             ->where('status', '>', 1)

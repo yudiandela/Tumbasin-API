@@ -108,9 +108,9 @@ class ProductController extends Controller
      *
      * @return  JSON
      */
-    public function topSeller()
+    public function bestSeller()
     {
-        $products = ProductAction::topSeller();
+        $products = ProductAction::bestSeller();
 
         return response()->json([
             'status' => [
