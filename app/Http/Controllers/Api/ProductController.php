@@ -65,6 +65,45 @@ class ProductController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Product $product)
+    {
+        ProductAction::update($request, $product);
+        return response()->json([
+            'status' => [
+                'code' => 201,
+                'description' => 'Updated'
+            ],
+            'result' => new ProductResource($product)
+        ], 201);
+    }
+
+    /**
+     * Destroy the specified resource in storage.
+     *
+     * @param  \App\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Product $product)
+    {
+        ProductAction::destroy($product);
+        return response()->json([
+            'status' => [
+                'code' => 200,
+                'description' => 'Deleted'
+            ],
+            'result' => [
+                'message' => 'Product deleted'
+            ]
+        ]);
+    }
+
+    /**
      * Mengambil data produk terlaris
      *
      * @return  JSON

@@ -83,6 +83,7 @@ class ProductAction
         $request->validate([
             'name'        => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
+            'category_id' => ['required', 'numeric'],
             'brand_id'    => ['required', 'numeric'],
             'price'       => ['required', 'numeric'],
             'unit'        => ['required', 'string'],
@@ -124,6 +125,22 @@ class ProductAction
         ]);
     }
 
+    /**
+     * Destroy the specified resource in storage.
+     *
+     * @param  \App\Product  $product
+     * @return \Illuminate\Http\Response
+     */
+    public static function destroy($product)
+    {
+        return $product->delete();
+    }
+
+    /**
+     * Mengambil data product berdasarkan Orderan terbanyak
+     *
+     * @return \Illuminate\Http\Response
+     */
     public static function topSeller()
     {
         $orders = Order::select('product_id', DB::raw('count(product_id) as count'))
