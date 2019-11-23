@@ -25,8 +25,8 @@ Route::middleware('api')->name('api.')->prefix('v1')->group(function () {
         // CRUD Category
         Route::resource('category', 'Api\CategoryController')->except(['create', 'edit']);
         
-        // // CRUD brand
-        // Route::resource('brand', 'Api\BrandController')->only(['index', 'show']);
+        // CRUD brand
+        Route::resource('brand', 'Api\BrandController')->except(['create', 'edit']);
 
         // // CRUD product
         // Route::get('product/top-seller', 'Api\ProductController@topSeller')->name('product.topSeller');
