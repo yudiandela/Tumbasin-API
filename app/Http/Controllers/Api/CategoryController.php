@@ -28,6 +28,12 @@ class CategoryController extends Controller
         ], 200);
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
         $category = CategoryAction::store($request);
@@ -82,20 +88,20 @@ class CategoryController extends Controller
     /**
      * Destroy the specified resource in storage.
      *
-     * @param  \App\Product  $product
+     * @param  \App\Category  $category
      * @return \Illuminate\Http\Response
      */
     public function destroy(Category $category)
     {
         CategoryAction::destroy($category);
         return response()->json([
-                'status' => [
-                    'code' => 200,
-                    'description' => 'Deleted'
-                ],
-                'result' => [
-                    'message' => 'Category deleted'
-                ]
-            ], 200);
+            'status' => [
+                'code' => 200,
+                'description' => 'Deleted'
+            ],
+            'result' => [
+                'message' => 'Category deleted'
+            ]
+        ], 200);
     }
 }
