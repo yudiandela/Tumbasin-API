@@ -34,6 +34,7 @@ class ProductAction
         $request->validate([
             'name'        => ['required', 'string', 'max:255'],
             'description' => ['required', 'string'],
+            'category_id' => ['required', 'numeric'],
             'image'       => ['required'],
             'brand_id'    => ['required', 'numeric'],
             'price'       => ['required', 'numeric'],

@@ -6,6 +6,7 @@ use App\Product;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Action\ProductAction;
 use App\Http\Resources\ProductResource;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
@@ -25,6 +26,25 @@ class ProductController extends Controller
             ],
             'result' => ProductResource::collection($products)
         ], 200);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $product = ProductAction::store($request);
+
+        return response()->json([
+            'status' => [
+                'code' => 201,
+                'description' => 'Created'
+            ],
+            'result' => new ProductResource($product)
+        ], 201);
     }
 
     /**

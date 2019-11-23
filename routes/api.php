@@ -30,7 +30,7 @@ Route::middleware('api')->name('api.')->prefix('v1')->group(function () {
 
         // CRUD product
         Route::get('product/top-seller', 'Api\ProductController@topSeller')->name('product.topSeller');
-        Route::resource('product', 'Api\ProductController')->only(['index', 'show']);
+        Route::resource('product', 'Api\ProductController')->only(['index', 'show', 'store']);
 
         // Order Route
         Route::resource('order', 'Api\OrderController')->except(['edit', 'update', 'show']);
