@@ -12,33 +12,33 @@
 */
 
 // Authentication Route
-// Auth::routes(['verify' => true]);
+Auth::routes(['verify' => true]);
 
-// // Show Index page
-// Route::get('/', 'RootController')->name('root.index');
+// Show Index page
+Route::get('/', 'RootController')->name('root.index');
 
-// Route::middleware(['auth', 'verified'])->group(function () {
-//     // Show Dashboard page
-//     Route::get('dashboard', 'DashboardController')->name('dashboard.index');
+Route::middleware(['auth', 'verified'])->group(function () {
+    // Show Dashboard page
+    Route::get('dashboard', 'DashboardController')->name('dashboard.index');
 
-//     // Get Api Key
-//     Route::get('apikey', 'ApiTokenController@index')->name('apikey.index');
-//     Route::put('apikey/update', 'ApiTokenController@update')->name('apikey.update');
+    // Get Api Key
+    Route::get('apikey', 'ApiTokenController@index')->name('apikey.index');
+    Route::put('apikey/update', 'ApiTokenController@update')->name('apikey.update');
 
-//     // CRUD Brand
-//     Route::resource('brand', 'BrandController')->except(['show']);
+    // CRUD Brand
+    Route::resource('brand', 'BrandController')->except(['show']);
 
-//     // CRUD Category
-//     Route::resource('category', 'CategoryController')->except(['show']);
+    // CRUD Category
+    Route::resource('category', 'CategoryController')->except(['show']);
 
-//     // CRUD Product
-//     Route::get('product/top-seller', 'ProductController@topSeller')->name('product.topseller');
-//     Route::resource('product', 'ProductController');
+    // CRUD Product
+    Route::get('product/top-seller', 'ProductController@topSeller')->name('product.topseller');
+    Route::resource('product', 'ProductController');
 
-//     // Order Route
-//     Route::resource('order', 'OrderController')->except(['edit', 'update', 'show']);
-//     Route::get('order/status/{status}', 'OrderController@getStatus')->name('order.getByStatus');
-//     Route::match(['put', 'patch'], 'order/status/{id}/change', 'OrderController@changeStatus')->name('order.change.status');
-//     Route::get('order/product/{order}', 'OrderController@showByProduct')->name('order.showByProduct');
-//     Route::get('order/order-number/{id}', 'OrderController@byOrderNumber')->name('order.byOrderNumber');
-// });
+    // Order Route
+    Route::resource('order', 'OrderController')->except(['edit', 'update', 'show']);
+    Route::get('order/status/{status}', 'OrderController@getStatus')->name('order.getByStatus');
+    Route::match(['put', 'patch'], 'order/status/{id}/change', 'OrderController@changeStatus')->name('order.change.status');
+    Route::get('order/product/{order}', 'OrderController@showByProduct')->name('order.showByProduct');
+    Route::get('order/order-number/{id}', 'OrderController@byOrderNumber')->name('order.byOrderNumber');
+});
