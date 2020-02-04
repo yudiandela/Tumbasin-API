@@ -4,4 +4,4 @@
 
 ### Dokumentasi API
 
-Dokumentasi [Postman Docs](https://documenter.getpostman.com/view/1379625/SVtZtk91)
+Dokumentasi [Postman Docs](https://documenter.getpostman.com/view/1379625/SVzubhDq)
